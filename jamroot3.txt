@@ -1,0 +1,47 @@
+import os ;
+GL_ADDRESS_MODEL	= [ os.environ MODEL ] ;
+project asxom        : requirements
+                      <tag>@sgt-tag
+                      <threading>multi
+                      <link>shared
+                      <variant>debug:<optimization>off
+                      <variant>release:<optimization>speed
+                      <toolset>gcc:<cxxflags>-fpermissive
+                      <toolset>gcc:<define>GTMDPLUGIN_EXPORT=
+                      <toolset>gcc:<define>MDFEEDPLUGIN_EXPORT=
+                      <toolset>gcc:<define>__SLC_COMPILE=
+                      <toolset>gcc:<define>LINUX
+                      <toolset>gcc:<define>OS_LIN
+                      <toolset>gcc:<define>REENTRANT
+                      <toolset>gcc:<define>NOSRVINFO_MAN
+                    : default-build
+                      <address-model>64
+                    ;
+#=====================================================================
+#                PATH CONSTANTS
+#=====================================================================
+import os ;
+local GL_ROOT                   = [ gl-root ] ;
+local GTMDS_LOCAL               = [ os.environ GTMDS_LOCAL ] ;
+local GL_DELIVERY_PATH          = [ os.environ GL_DELIVERY_PATH ] ;
+local GTMDS_LIB                 = [ os.environ GTMDS_LIB ] ;
+local GTMDS_FEEDPLUGIN          = [ os.environ GTMDS_FEEDPLUGIN ] ;
+local GTSHARED_GWTOOLS          = [ os.environ GTSHARED_GWTOOLS ] ; 
+local GL_SHRDEXCHANGE           = [ os.environ GL_SHRDEXCHANGE ] ;
+path-constant /mdfeedplugin     : $(GTMDS_FEEDPLUGIN) ;
+path-constant /gtwtools         : $(GTSHARED_GWTOOLS) ;
+path-constant /mds_w            : $(GL_ROOT)/master/mdds/2020.2.0.14/MDS_W ;
+path-constant /glencrypt        : $(GL_ROOT)/infra/glencrypt/9.1.2.2 ;
+path-constant /glf_glcodage     : $(GTMDS_LIB)/inc/glf_glcodage/ ;
+path-constant /conflib          : $(GL_ROOT)/infra/conflib/1.0.3.7 ;
+path-constant /warnings         : $(GL_ROOT)/infra/warnings/1.0.1.1 ;
+path-constant /passmgmt         : $(GL_ROOT)/passmgmt/11.1.1.1118393 ;
+path-constant /omlibmds         : ./genomlib ;
+path-constant /exchangeomlib    : ./om ;
+path-constant /gtestlib         : $(GL_DELIVERY_PATH)/gtest/gtest-1.7.0 ;
+################################################################################
+#Used Libraries
+use-project /om                 : om ;
+use-project /gtmddm : $(/mds_w)/export/lib/gtmddm ;
+
+
